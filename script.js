@@ -236,10 +236,6 @@ const countries = [
         clues: ["Capital is Tirana", "Located in Europe", "Neighboring countries are Montenegro, Kosovo, North Macedonia, Greece", "Flag is red with a black double-headed eagle"]
     },
     {
-        name: "Greece",
-        clues: ["Capital is Athens", "Located in Europe", "Neighboring countries are Albania, North Macedonia, Bulgaria, Turkey", "Flag is blue and white with a cross"]
-    },
-    {
         name: "Kosovo",
         clues: ["Capital is Pristina", "Located in Europe", "Neighboring countries are Serbia, Montenegro, Albania, North Macedonia", "Flag is blue with a yellow map and stars"]
     },
@@ -374,6 +370,7 @@ let clueIndex = 0;
 let score = 0;
 let totalQuestions = 10;
 let questionsAsked = 0;
+let remainingCountries = [...countries]; // Copy the list of countries
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -383,9 +380,12 @@ function shuffle(array) {
 }
 
 function startQuiz() {
-    // Shuffle countries each time the quiz starts
-    shuffle(countries);
-    currentCountry = countries[Math.floor(Math.random() * countries.length)];
+    if (remainingCountries.length === 0) {
+        remainingCountries = [...countries]; // Reset the list of countries if all have been used
+    }
+
+    shuffle(remainingCountries);
+    currentCountry = remainingCountries.pop(); // Select a country and remove it from the list
     clueIndex = 0;
     shuffle(currentCountry.clues); // Shuffle clues to randomize order
     document.getElementById("clue").innerText = currentCountry.clues[clueIndex];
