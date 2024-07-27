@@ -53,7 +53,9 @@ function startQuiz() {
     document.getElementById("clue").innerText = currentCountry.clues[clueIndex];
     document.getElementById("result").innerText = "";
     document.getElementById("answer").value = "";
-    document.getElementById("country-image").src = currentCountry.images[clueIndex];
+    const imagePath = currentCountry.images[clueIndex];
+    console.log(`Loading image from: ${imagePath}`);
+    document.getElementById("country-image").src = imagePath;
 }
 
 function checkAnswer() {
@@ -71,7 +73,9 @@ function checkAnswer() {
         clueIndex++;
         if (clueIndex < currentCountry.clues.length) {
             document.getElementById("clue").innerText = currentCountry.clues[clueIndex];
-            document.getElementById("country-image").src = currentCountry.images[clueIndex];
+            const imagePath = currentCountry.images[clueIndex];
+            console.log(`Loading image from: ${imagePath}`);
+            document.getElementById("country-image").src = imagePath;
             document.getElementById("result").innerText = "Incorrect. Try again!";
         } else {
             document.getElementById("result").innerText = `Sorry, the correct answer was ${currentCountry.name}. Your score is ${score}.`;
