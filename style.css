@@ -15,12 +15,6 @@ body {
     text-align: center;
 }
 
-#image-container img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-}
-
 #clue-container {
     margin-bottom: 20px;
 }
