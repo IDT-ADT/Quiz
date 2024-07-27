@@ -52,7 +52,11 @@ function startQuiz() {
     shuffle(currentCountry.clues);
     document.getElementById("clue").innerText = currentCountry.clues[clueIndex];
     document.getElementById("result").innerText = "";
-    document.getElementById("answer").value = "";
+    const answerInput = document.getElementById("answer");
+    if (document.activeElement !== answerInput) {
+        answerInput.value = "";
+        answerInput.focus();
+    }
     const imagePath = currentCountry.images[clueIndex];
     console.log(`Loading image from: ${imagePath}`);
     document.getElementById("country-image").src = imagePath;
