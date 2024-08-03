@@ -3,19 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guess the Country Quiz</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Geography Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #result {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div class="quiz-container">
-        <h1>Guess the Country Quiz</h1>
-        <div id="clue-container">
-            <p id="clue">Clue will appear here</p>
-        </div>
-        <input type="text" id="answer" placeholder="Type your guess here">
-        <button onclick="checkAnswer()">Submit</button>
-        <p id="result"></p>
-    </div>
-    <script src="script.js"></script>
+    <h1>Guess the Country</h1>
+    <p id="clue"></p>
+    <input type="text" id="answer" placeholder="Enter country name">
+    <button onclick="checkAnswer()">Submit</button>
+    <p id="result"></p>
+    <script>
+        let countries = [
+            {
+                name: "Argentina",
+                clues: [
+                    "Capital is Buenos Aires",
+                    "Major cities include Córdoba and Rosario",
+                    "Famous landmark is Iguazu Falls",
+                    "Official language is Spanish",
+                    "Currency is Argentine Peso",
+                    "Located in South America",
+                    "Flag description: Blue and white stripes with a yellow sun"
+                ]
+            },
+            {
+                name: "Bolivia",
+                clues: [
+                    "Capital is Sucre (constitutional) and La Paz (administrative)",
+                    "Major cities include Santa Cruz and Cochabamba",
+                    "Famous landmark is Salar de Uyuni",
+                    "Official languages are Spanish and indigenous languages",
+                    "Currency is Bolivian Boliviano",
+                    "Located in South America",
+                    "Flag description: Red, yellow, and green horizontal stripes with a coat of arms"
+                ]
+            },
+            // Include all other countries here
+            {
+                name: "Nigeria",
+                clues: [
+                    "Capital is Abuja",
+                    "Major cities include Lagos and Kano",
+                    "Famous landmark is Zuma Rock",
+                    "Official language is English",
+                    "Currency is Nigerian Naira",
+                    "Located in Africa",
+                    "Flag description: Green and white vertical stripes"
+                ]
+            }
+        ];
+
+        let currentCountry = {};
+        let clueIndex = 0;
+        let score = 0;
+        let questionsAsked = 0;
+        let remainingCountries = [...countries];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function displayRandomCountry() {
+            if (remainingCountries.length === 0) {
+                document.getElementById('result').innerText = `Quiz complete! Your score is ${score} out of ${questionsAsked}.`;
+                return;
+            }
+
+            const randomIndex = Math.floor(Math.random() * remainingCountries.length);
+            currentCountry = remainingCountries.splice(randomIndex, 1)[0];
+            clueIndex = 0;
+            questionsAsked++;
+
+            shuffle(currentCountry.clues);
+
+            document.getElementById('countryName').innerText = "";
+            document.getElementById('clue').innerText = currentCountry.clues[clueIndex];
+        }
+
+        function nextClue() {
+            if (clueIndex < currentCountry.clues.length - 1) {
+                clueIndex++;
+                document.getElementById('clue').innerText = currentCountry.clues[clueIndex];
+            } else {
+                document.getElementById('result').innerText = `The correct answer was ${currentCountry.name}.`;
+                displayRandomCountry();
+            }
+        }
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
+            if (userAnswer === currentCountry.name.toLowerCase()) {
+                score++;
+                document.getElementById('result').innerText = `Correct! Your score is ${score}.`;
+                displayRandomCountry();
+            } else {
+                nextClue();
+            }
+            document.getElementById('answer').value = '';
+        }
+
+        // Start the game
+        shuffle(countries);
+        displayRandomCountry();
+    </script>
 </body>
 </html>
