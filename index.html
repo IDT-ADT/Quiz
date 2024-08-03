@@ -6,7 +6,16 @@
     <title>Geography Quiz</title>
     <style>
         body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        .quiz-container {
+            text-align: center;
+            width: 300px;
         }
         #result {
             font-weight: bold;
@@ -15,11 +24,13 @@
     </style>
 </head>
 <body>
-    <h1>Guess the Country</h1>
-    <p id="clue"></p>
-    <input type="text" id="answer" placeholder="Enter country name">
-    <button onclick="checkAnswer()">Submit</button>
-    <p id="result"></p>
+    <div class="quiz-container">
+        <h1>Guess the Country</h1>
+        <p id="clue"></p>
+        <input type="text" id="answer" placeholder="Enter country name">
+        <button onclick="checkAnswer()">Submit</button>
+        <p id="result"></p>
+    </div>
     <script>
         let countries = [
             {
@@ -87,7 +98,6 @@
 
             shuffle(currentCountry.clues);
 
-            document.getElementById('countryName').innerText = "";
             document.getElementById('clue').innerText = currentCountry.clues[clueIndex];
         }
 
